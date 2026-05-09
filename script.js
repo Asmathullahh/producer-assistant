@@ -223,6 +223,28 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatSendBtn = document.getElementById('chat-send-btn');
     const chatInput = document.getElementById('chat-input');
     const chatHistory = document.getElementById('chat-history');
+    const apiKeyInput = document.getElementById('gemini-api-key');
+
+    // Instant API Key Validation
+    apiKeyInput.addEventListener('blur', async (e) => {
+        const key = e.target.value.trim();
+        if (!key) {
+            apiKeyInput.style.borderColor = 'var(--border)';
+            return;
+        }
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${key}`);
+            if (res.ok) {
+                apiKeyInput.style.borderColor = '#22c55e'; // Green for success
+                apiKeyInput.style.boxShadow = '0 0 10px rgba(34, 197, 94, 0.3)';
+            } else {
+                apiKeyInput.style.borderColor = '#ef4444'; // Red for failure
+                apiKeyInput.style.boxShadow = '0 0 10px rgba(239, 68, 68, 0.3)';
+            }
+        } catch(err) {
+            apiKeyInput.style.borderColor = '#ef4444';
+        }
+    });
 
     chatSendBtn.addEventListener('click', async () => {
         const apiKey = document.getElementById('gemini-api-key').value.trim();
