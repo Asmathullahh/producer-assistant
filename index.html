@@ -13,6 +13,9 @@
             <div class="logo">Azu_Co-producer <span>Studio</span></div>
             <h1>AI Producer Assistant</h1>
             <p>Upload your tracks and describe your vision. Get a mathematical mixing roadmap.</p>
+            <div class="api-settings">
+                <input type="password" id="gemini-api-key" placeholder="Enter Gemini API Key (Optional for AI Chat)">
+            </div>
         </header>
 
         <main>
@@ -50,6 +53,17 @@
                 <h2>Producer Roadmap</h2>
                 <div id="roadmap-content" class="roadmap-content">
                     <!-- Roadmap will be injected here -->
+                </div>
+            </section>
+
+            <section id="chat-section" class="chat-section hidden">
+                <h2>Ask the Co-Producer</h2>
+                <div id="chat-history" class="chat-history">
+                    <div class="chat-msg ai">I have reviewed your tracks and generated the roadmap. What specific questions do you have about the mix?</div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="e.g. How do I sidechain Track B to Track A's kick?">
+                    <button id="chat-send-btn" class="btn primary">Send</button>
                 </div>
             </section>
         </main>

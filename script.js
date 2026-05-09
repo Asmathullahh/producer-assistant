@@ -213,5 +213,70 @@ document.addEventListener('DOMContentLoaded', () => {
                 <p>Based on your description: <em>"${vibeInput.value}"</em>.<br>Chop Track B into 4-bar loops. Introduce Track B exactly at the 16th bar (after Track A's intro builds up). Add a long 1/4 note delay to Track B to blend it smoothly.</p>
             </div>
         `;
+
+        // Reveal Chat Section
+        const chatSection = document.getElementById('chat-section');
+        chatSection.classList.remove('hidden');
+    });
+
+    // Chat Logic
+    const chatSendBtn = document.getElementById('chat-send-btn');
+    const chatInput = document.getElementById('chat-input');
+    const chatHistory = document.getElementById('chat-history');
+
+    chatSendBtn.addEventListener('click', async () => {
+        const apiKey = document.getElementById('gemini-api-key').value.trim();
+        const question = chatInput.value.trim();
+        if (!question) return;
+
+        // Display user message
+        chatHistory.innerHTML += `<div class="chat-msg user">${question}</div>`;
+        chatInput.value = '';
+        
+        // Display loading state
+        const loadingId = 'loading-' + Date.now();
+        chatHistory.innerHTML += `<div id="${loadingId}" class="chat-msg ai" style="opacity: 0.5;">Thinking...</div>`;
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+
+        if (!apiKey) {
+            document.getElementById(loadingId).innerHTML = "⚠️ Please enter your Gemini API Key in the settings at the top to activate the AI Chat.";
+            return;
+        }
+
+        const roadmapContext = document.getElementById('roadmap-content').innerText || "Roadmap not generated yet.";
+        
+        const prompt = `You are a professional music producer assistant. The user is mixing two tracks. 
+Context Roadmap:
+${roadmapContext}
+
+User Question: ${question}
+
+Provide a concise, professional answer specifically tailored to music production and the context provided.`;
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await response.json();
+            
+            if (data.error) {
+                document.getElementById(loadingId).innerHTML = `⚠️ API Error: ${data.error.message}`;
+            } else {
+                const answer = data.candidates[0].content.parts[0].text;
+                // Basic markdown to HTML (bolding)
+                const formattedAnswer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                document.getElementById(loadingId).innerHTML = formattedAnswer;
+                document.getElementById(loadingId).style.opacity = '1';
+            }
+        } catch (err) {
+            document.getElementById(loadingId).innerHTML = "⚠️ Failed to connect to the AI service. Please check your API key and connection.";
+        }
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') chatSendBtn.click();
     });
 });
