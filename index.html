@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AntiGravity AI Producer Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">AntiGravity <span>Studio</span></div>
+            <h1>AI Producer Assistant</h1>
+            <p>Upload your tracks and describe your vision. Get a mathematical mixing roadmap.</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <div class="deck">
+                    <h2>Track A (Base Layer)</h2>
+                    <label class="file-upload">
+                        <input type="file" id="track-a-upload" accept="audio/*">
+                        <span id="track-a-label">Choose Audio File</span>
+                    </label>
+                    <div id="track-a-meta" class="meta-card hidden">
+                        <!-- Metadata will be injected here -->
+                    </div>
+                </div>
+
+                <div class="deck">
+                    <h2>Track B (Overlay)</h2>
+                    <label class="file-upload">
+                        <input type="file" id="track-b-upload" accept="audio/*">
+                        <span id="track-b-label">Choose Audio File</span>
+                    </label>
+                    <div id="track-b-meta" class="meta-card hidden">
+                        <!-- Metadata will be injected here -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="vision-section">
+                <h2>The Vibe</h2>
+                <textarea id="vibe-description" placeholder="Example: I want Afro house Muye as base layer and cheppavey chirugali layered on top. Make it a sunset party vibe."></textarea>
+                <button id="analyze-btn" class="btn primary" disabled>Analyze & Generate Roadmap</button>
+            </section>
+
+            <section id="roadmap-section" class="roadmap-section hidden">
+                <h2>Producer Roadmap</h2>
+                <div id="roadmap-content" class="roadmap-content">
+                    <!-- Roadmap will be injected here -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Include external libraries from CDNs for heavy lifting if needed, but we'll try pure JS first -->
+    <script src="script.js"></script>
+</body>
+</html>
