@@ -1,4 +1,4 @@
-# 🎧 AntiGravity AI Producer Assistant
+# 🎧 Azu_Co-producer AI Assistant
 
 An elegant, completely browser-based web application that acts as your personal AI audio engineer. Upload any two tracks, describe the vibe of the mashup you want to create, and the application will instantly provide a mathematical roadmap for your DAW (Ableton, FL Studio, Logic Pro).
 
@@ -35,4 +35,4 @@ Because the app is built without a backend framework, you can run it instantly!
 The UI features a stunning dark aesthetic with vibrant accent gradients (`#f97316` and `#8b5cf6`), glassmorphic cards, and dynamic state transitions.
 
 ## 📝 License
-Created by AntiGravity.
+Created by Azu_Co-producer.
